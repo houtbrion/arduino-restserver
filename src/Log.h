@@ -2,11 +2,11 @@
 #define log_h
 
 #ifndef N_LOG
-#define LOG_SETUP(var) Serial.begin(var);
+#define LOG_SETUP() Serial.begin(38400);
 #define LOG(var) Serial.println(var);
 #define LOGChar(var) Serial.print(var);
 #else
-#define LOG_SETUP(var) ;
+#define LOG_SETUP() ;
 #define LOG(var) ;
 #define LOGChar(var) ;
 #endif
