@@ -1,7 +1,14 @@
 #include "RestServer.h"
 
+
+
+#ifdef USE_WIFI
+RestServer::RestServer(WiFiServer& server): server_(server), routesIndex_(0), bufferIndex_(0) {
+}
+#else /* USE_WIFI */
 RestServer::RestServer(EthernetServer& server): server_(server), routesIndex_(0), bufferIndex_(0) {
 }
+#endif /* USE_WIFI */
 
 void RestServer::run() {
   client_ = server_.available();
@@ -138,7 +145,7 @@ void RestServer::send(uint8_t chunkSize, uint8_t delayTime) {
 
 // Extract information about the HTTP Header
 void RestServer::check() {
-  char route[ROUTES_LENGHT] = {0};
+  char route[ROUTES_LENGTH] = {0};
   bool routePrepare = false;
   bool routeCatchFinished = false;
   uint8_t r = 0;
@@ -208,22 +215,23 @@ void RestServer::check() {
 
   }
 
+
   for(int i = 0; i < routesIndex_; i++) {
-      // Check if the routes names matches
-      if(strncmp( route, routes_[i].name, sizeof(routes_[i].name) ) != 0)
+    // Check if the routes names matches
+    if(strncmp( route, routes_[i].name, sizeof(routes_[i].name) ) != 0) {
+      continue;
+    }
+
+    // Check if the HTTP METHOD matters for this route
+    if(strncmp( routes_[i].method, "*", sizeof(routes_[i].method) ) != 0) {
+      // If it matters, check if the methods matches
+      if(strncmp( method, routes_[i].method, sizeof(routes_[i].method) ) != 0) {
         continue;
-
-      // Check if the HTTP METHOD matters for this route
-      if(strncmp( routes_[i].method, "*", sizeof(routes_[i].method) ) != 0) {
-        // If it matters, check if the methods matches
-        if(strncmp( method, routes_[i].method, sizeof(routes_[i].method) ) != 0)
-          continue;
       }
+    }
 
-      // Route callback (function)
-      // DLOG(route);
-      routes_[i].callback(query);
-      LOG("Route callback!");
+    // Route callback (function)
+    routes_[i].callback(query);
   }
 
 }
