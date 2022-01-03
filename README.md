@@ -8,13 +8,16 @@ All the endpoints of the API are implemented by the developer in functions and t
 Setup
 -----
 
-- Connect the Ethernet Shield/Card at your Arduino
+- Connect the Ethernet Shield/Card at your Arduino (if needed.)
+- Edit configuration file (RestSettings.h) of this library.
+  - enable network interface definition if you use UIPETHERNET library or wifi network interface.
+    - //#define USE_UIPETHERNET
+    - //#define USE_WIFI
 - Add the library at your Arduino IDE (Sketch > Import Library > Add...)
-- Include these files:
+- Include these files to your sketch:
   - RestServer.h
-  - UIPEthernet.h OR Ethernet.h
   - Log.h
-- Setup the EthernetServer
+- Setup the EthernetServer (or WifiServer).
 - Add ```RestServer rest(server);``` to initialize the RestServer. Don't forget to pass the EthernetServer object as argument
 - Create functions which your routes will callback to process the data. You need to add the (char * params) as the argument of the function and the return type as void.
   - Example: ```void digital(char * params = "") {;} ```
