@@ -1,12 +1,15 @@
 #ifndef restsettings_h
 #define restsettings_h
 
+//#define USE_UIPETHERNET
+//#define USE_WIFI
+
 #ifndef ROUTES_TOTAL
-#define ROUTES_TOTAL 5
+#define ROUTES_TOTAL 64
 #endif
 
-#ifndef ROUTES_LENGHT
-#define ROUTES_LENGHT 30
+#ifndef ROUTES_LENGTH
+#define ROUTES_LENGTH 30
 #endif
 
 #ifndef QUERY_LENGTH
@@ -15,11 +18,11 @@
 
 #ifndef HTTP_COMMON_HEADER
 #define HTTP_COMMON_HEADER "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods: POST, GET, PUT, OPTIONS\r\nContent-Type: application/json\r\nConnection: close\r\n"
-#endif HTTP_COMMON_HEADER
+#endif /* HTTP_COMMON_HEADER */
 
 #ifndef OUTPUT_BUFFER_SIZE
 #define OUTPUT_BUFFER_SIZE 250
-#endif OUTPUT_BUFFER_SIZE
+#endif /* OUTPUT_BUFFER_SIZE */
 
 #define JSON_START() addToBuffer("{ ");
 #define JSON_CLOSE() addToBuffer(" }");
@@ -35,4 +38,4 @@
 #define DELETE "DELETE"
 #define OPTIONS "OPTIONS"
 
-#endif
+#endif /* restsettings_h */
